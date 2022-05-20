@@ -12,7 +12,7 @@ try:
 except:
     print("Please check your RedShift credentials")
 
-# using redshift_connector
+# using redshift_connector update the credentials
 
 
 conn = rc.connect(
