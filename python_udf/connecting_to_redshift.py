@@ -24,3 +24,37 @@ conn = rc.connect(
 conn.autocommit = True
 
 cursor = rc.cursor.Cursor(conn, 'format')
+
+# Unload data to S3 from redshift
+
+# Constants
+
+query = """select * from ----"""
+path = """s3 path"""
+# Unload Command
+
+cursor.execute(f"""unload ($$
+
+{query}
+
+$$) to {path}
+iam_role 'arn:aws:iam::--- IAM role'
+PARQUET 
+CLEANPATH 
+MAXFILESIZE 30 MB
+PARALLEL ON;""")
+
+# Note to use clean path to delete the path before unloading - if you use ALLOWOVERWRITE it will only overwrite the
+# partitions
+
+
+# Copy data from S3 to Redshift
+# make sure to create the table before copying data
+# Truncate if you need to overwrite the table
+query_write = """copy schema.table_to_be_copied_into 
+from 's3 path' 
+iam_role 'arn:aws:iam::--- IAM role'
+FORMAT AS PARQUET
+"""
+
+cursor.execute(query_write)
