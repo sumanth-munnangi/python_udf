@@ -66,5 +66,6 @@ df.to_sql('table_to_be_copied_into',
           schema='schema_name',
           chunksize=10000,
           if_exists='replace',
+          
           method='multi',
           index=False)
