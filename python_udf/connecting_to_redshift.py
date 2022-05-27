@@ -59,7 +59,7 @@ FORMAT AS PARQUET
 
 cursor.execute(query_write)
 
-# Use SQL Alchemy to write data
+# Use SQL Alchemy to write data from a dataframe
 
 df.to_sql('table_to_be_copied_into',
           engine,
